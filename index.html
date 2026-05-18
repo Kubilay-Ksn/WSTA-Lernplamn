@@ -6,463 +6,375 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #e2e8f0; padding: 20px; }
-  h1 { text-align: center; font-size: 1.35rem; color: #7dd3fc; margin-bottom: 4px; }
-  .subtitle { text-align: center; color: #64748b; font-size: 0.8rem; margin-bottom: 20px; }
+  h1 { text-align: center; font-size: 1.3rem; color: #7dd3fc; margin-bottom: 4px; }
+  .subtitle { text-align: center; color: #64748b; font-size: 0.78rem; margin-bottom: 18px; }
 
-  /* Countdown */
-  .countdown { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-  .cbox { background: #1e293b; border-radius: 10px; padding: 8px 16px; text-align: center; border: 1px solid #334155; }
-  .cbox .num { font-size: 1.5rem; font-weight: 700; color: #f87171; }
-  .cbox .lbl { font-size: 0.65rem; color: #94a3b8; }
+  /* Legend */
+  .legend { display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; padding: 5px 12px; border-radius: 20px; }
+  .leg.p1-leg { background: #1a0a0a; border: 1px solid #ef4444; color: #fca5a5; }
+  .leg.p2-leg { background: #0a1a10; border: 1px solid #22c55e; color: #86efac; }
+  .leg.p3-leg { background: #1a1808; border: 1px solid #eab308; color: #fde68a; }
 
-  /* Prof note */
-  .prof-note { background: #0a1f14; border: 1px solid #166534; border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.73rem; }
-  .prof-note h3 { color: #4ade80; font-size: 0.8rem; margin-bottom: 8px; }
-  .prof-note .exclude { color: #f87171; }
-  .prof-note .include { color: #86efac; }
-  .prof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-
-  /* Phase */
+  /* Phase block */
   .phase { margin-bottom: 14px; border-radius: 12px; overflow: hidden; border: 1px solid #1e293b; }
-  .phase-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .phase-header h2 { font-size: 0.88rem; flex: 1; }
-  .phase-header .dates { font-size: 0.7rem; color: #94a3b8; white-space: nowrap; }
-  .phase-header .badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; white-space: nowrap; }
+  .phase-header { padding: 9px 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .phase-header h2 { font-size: 0.86rem; flex: 1; }
+  .phase-header .dates { font-size: 0.68rem; color: #94a3b8; }
+  .phase-header .kap { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
 
-  /* Days grid */
-  .days { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; padding: 10px; background: #0d1117; }
-  .day { background: #151d2e; border-radius: 8px; padding: 9px 10px; border-left: 3px solid #334155; }
+  /* Day card */
+  .days { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; padding: 10px; background: #0d1117; }
+  .day { border-radius: 8px; padding: 10px; border: 1px solid #1e293b; }
   .day .day-label { font-size: 0.62rem; color: #64748b; margin-bottom: 2px; }
-  .day .day-name { font-size: 0.76rem; font-weight: 700; color: #f1f5f9; margin-bottom: 5px; }
-  .day ul { font-size: 0.68rem; color: #cbd5e1; padding-left: 11px; }
-  .day ul li { margin-bottom: 2px; }
-  .day .aufgabe { margin-top: 6px; font-size: 0.61rem; border-radius: 4px; padding: 2px 6px; display: inline-block; background: #0d1117; }
-  .day .new-tag { font-size: 0.58rem; background: #422006; color: #fdba74; border-radius: 3px; padding: 1px 5px; margin-left: 4px; vertical-align: middle; }
+  .day .day-name { font-size: 0.78rem; font-weight: 700; color: #f1f5f9; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid #1e293b; }
 
-  /* Skip box */
-  .skip-box { margin: 0 10px 10px; background: #1a0d0d; border-radius: 7px; padding: 7px 11px; border-left: 3px solid #ef4444; font-size: 0.68rem; color: #fca5a5; }
-  .skip-box strong { color: #f87171; }
+  /* Task rows */
+  .task-row { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 4px; font-size: 0.69rem; }
+  .task-row .prio { flex-shrink: 0; font-size: 0.6rem; padding: 1px 5px; border-radius: 3px; margin-top: 1px; font-weight: 700; }
+  .prio.must { background: #450a0a; color: #fca5a5; border: 1px solid #ef4444; }
+  .prio.should { background: #0a1f14; color: #86efac; border: 1px solid #22c55e; }
+  .prio.skip { background: #1a1a1a; color: #6b7280; border: 1px solid #374151; text-decoration: line-through; }
 
-  /* Tip */
-  .tip { background: #0a1a10; border-left: 3px solid #34d399; border-radius: 6px; padding: 6px 11px; font-size: 0.7rem; color: #86efac; margin: 0 10px 10px; }
+  .task-row .txt { color: #cbd5e1; line-height: 1.3; }
+  .task-row .txt.dimmed { color: #64748b; }
+  .task-row .aufg { margin-left: auto; flex-shrink: 0; font-size: 0.58rem; padding: 1px 5px; border-radius: 3px; font-weight: 600; }
+  .aufg.kv { background: #1e3a5f; color: #93c5fd; }
+  .aufg.extra { background: #1a1f2e; color: #475569; }
 
-  /* Info bar */
-  .info-bar { background: #1e293b; border-radius: 10px; padding: 11px 15px; font-size: 0.71rem; color: #94a3b8; margin-top: 10px; line-height: 1.6; }
+  /* Separator label */
+  .section-label { font-size: 0.63rem; color: #475569; margin: 6px 0 3px; font-style: italic; }
+
+  /* Phase color bars */
+  .c-blue .phase-header   { background: #0f1e35; border-bottom: 2px solid #3b82f6; }
+  .c-blue .phase-header h2 { color: #60a5fa; }
+  .c-blue .kap { background: #1e3a5f; color: #93c5fd; }
+  .c-blue .day { background: #0f1a2e; border-color: #1e3a5f; }
+
+  .c-green .phase-header  { background: #0a1c12; border-bottom: 2px solid #22c55e; }
+  .c-green .phase-header h2 { color: #4ade80; }
+  .c-green .kap { background: #052e16; color: #86efac; }
+  .c-green .day { background: #0a1812; border-color: #052e16; }
+
+  .c-purple .phase-header { background: #13102a; border-bottom: 2px solid #8b5cf6; }
+  .c-purple .phase-header h2 { color: #a78bfa; }
+  .c-purple .kap { background: #2e1065; color: #ddd6fe; }
+  .c-purple .day { background: #110e22; border-color: #2e1065; }
+
+  .c-orange .phase-header { background: #1c1308; border-bottom: 2px solid #f97316; }
+  .c-orange .phase-header h2 { color: #fb923c; }
+  .c-orange .kap { background: #431407; color: #fdba74; }
+  .c-orange .day { background: #180f05; border-color: #431407; }
+
+  .c-pink .phase-header   { background: #1a0a18; border-bottom: 2px solid #ec4899; }
+  .c-pink .phase-header h2 { color: #f472b6; }
+  .c-pink .kap { background: #500724; color: #fbcfe8; }
+  .c-pink .day { background: #160a14; border-color: #500724; }
+
+  .c-yellow .phase-header { background: #181508; border-bottom: 2px solid #eab308; }
+  .c-yellow .phase-header h2 { color: #facc15; }
+  .c-yellow .kap { background: #422006; color: #fde68a; }
+  .c-yellow .day { background: #141005; border-color: #422006; }
+
+  .c-red .phase-header    { background: #1c0a0a; border-bottom: 2px solid #ef4444; }
+  .c-red .phase-header h2 { color: #f87171; }
+  .c-red .kap { background: #450a0a; color: #fca5a5; }
+  .c-red .day { background: #150808; border-color: #450a0a; }
+
+  .info-bar { background: #1e293b; border-radius: 10px; padding: 11px 16px; font-size: 0.71rem; color: #94a3b8; margin-top: 10px; line-height: 1.7; }
   .info-bar strong { color: #7dd3fc; }
-
-  footer { text-align: center; color: #374151; font-size: 0.65rem; margin-top: 14px; }
-
-  /* Color themes per phase */
-  .p1 .phase-header { background: #0f1e35; border-bottom: 2px solid #3b82f6; }
-  .p1 .phase-header h2 { color: #60a5fa; }
-  .p1 .badge { background: #1e3a5f; color: #93c5fd; }
-  .p1 .day { border-left-color: #3b82f6; }
-  .p1 .day .aufgabe { color: #60a5fa; }
-
-  .p2 .phase-header { background: #0a1c12; border-bottom: 2px solid #22c55e; }
-  .p2 .phase-header h2 { color: #4ade80; }
-  .p2 .badge { background: #052e16; color: #86efac; }
-  .p2 .day { border-left-color: #22c55e; }
-  .p2 .day .aufgabe { color: #4ade80; }
-
-  .p3 .phase-header { background: #13102a; border-bottom: 2px solid #8b5cf6; }
-  .p3 .phase-header h2 { color: #a78bfa; }
-  .p3 .badge { background: #2e1065; color: #ddd6fe; }
-  .p3 .day { border-left-color: #8b5cf6; }
-  .p3 .day .aufgabe { color: #a78bfa; }
-
-  .p4 .phase-header { background: #1c1308; border-bottom: 2px solid #f97316; }
-  .p4 .phase-header h2 { color: #fb923c; }
-  .p4 .badge { background: #431407; color: #fdba74; }
-  .p4 .day { border-left-color: #f97316; }
-  .p4 .day .aufgabe { color: #fb923c; }
-
-  .p5 .phase-header { background: #1a0a18; border-bottom: 2px solid #ec4899; }
-  .p5 .phase-header h2 { color: #f472b6; }
-  .p5 .badge { background: #500724; color: #fbcfe8; }
-  .p5 .day { border-left-color: #ec4899; }
-  .p5 .day .aufgabe { color: #f472b6; }
-
-  .p6 .phase-header { background: #181508; border-bottom: 2px solid #eab308; }
-  .p6 .phase-header h2 { color: #facc15; }
-  .p6 .badge { background: #422006; color: #fde68a; }
-  .p6 .day { border-left-color: #eab308; }
-  .p6 .day .aufgabe { color: #facc15; }
-
-  .p7 .phase-header { background: #1c0a0a; border-bottom: 2px solid #ef4444; }
-  .p7 .phase-header h2 { color: #f87171; }
-  .p7 .badge { background: #450a0a; color: #fca5a5; }
-  .p7 .day { border-left-color: #ef4444; background: #180e0e; }
-  .p7 .day .aufgabe { color: #f87171; }
+  footer { text-align: center; color: #374151; font-size: 0.64rem; margin-top: 14px; }
 </style>
 </head>
 <body>
 
 <h1>📚 WSTA Lernplan – Klausur 08.06.2026</h1>
-<p class="subtitle">22 Tage · Vollständig Kapitel 1–7 · Nur Prof-Ausschlüsse sind raus</p>
+<p class="subtitle">22 Tage · Kap. 1–7 vollständig · mit Prioritäten nach Klausurvorbereitung</p>
 
-<div class="countdown">
-  <div class="cbox"><div class="num">22</div><div class="lbl">Tage gesamt</div></div>
-  <div class="cbox"><div class="num">7</div><div class="lbl">Phasen</div></div>
-  <div class="cbox"><div class="num">Kap 1–7</div><div class="lbl">vollständig</div></div>
-  <div class="cbox"><div class="num">3×2</div><div class="lbl">Formelblätter</div></div>
-  <div class="cbox"><div class="num">08.06</div><div class="lbl">🎯 Klausur</div></div>
+<div class="legend">
+  <div class="leg p1-leg">🔴 MUSS – steht auf KV-Liste des Profs</div>
+  <div class="leg p2-leg">🟢 SOLLTE – in Kap. 1–7, kein Verbot</div>
+  <div class="leg p3-leg">⚫ NICHT – Prof hat explizit ausgeschlossen</div>
 </div>
 
-<!-- Prof note -->
-<div class="prof-note">
-  <h3>📋 Prof. Dax am 11.05.2026 – Das sind die einzigen sicheren Ausschlüsse:</h3>
-  <div class="prof-grid">
-    <div>
-      <div class="exclude">🚫 Kommt NICHT:</div>
-      <div class="exclude">· Lorenzkurve &amp; Gini-Koeffizient</div>
-      <div class="exclude">· Trendermittlung &amp; Sinuskurven</div>
-      <div class="exclude">· Definitionen auswendig lernen</div>
-    </div>
-    <div>
-      <div class="include">✅ Kommt definitiv:</div>
-      <div class="include">· Exponentialverteilung</div>
-      <div class="include">· Poisson (seltenes Ereignis)</div>
-      <div class="include">· Alles in Kap. 1–7 (außer oben)</div>
-    </div>
-  </div>
-</div>
-
-<!-- PHASE 1 -->
-<div class="phase p1">
+<!-- ═══════════════ PHASE 1 ═══════════════ -->
+<div class="phase c-blue">
   <div class="phase-header">
-    <h2>📊 Phase 1 – Deskriptive Statistik (Kap. 1 + 2)</h2>
+    <h2>📊 Phase 1 – Deskriptive Statistik</h2>
     <span class="dates">18.–21. Mai · 4 Tage</span>
-    <span class="badge">Aufgabenblatt 1</span>
+    <span class="kap">Kap. 1 + 2 · AB 1</span>
   </div>
   <div class="days">
+
     <div class="day">
-      <div class="day-label">Tag 1 · So 18.05</div>
-      <div class="day-name">Lageparameter I</div>
-      <ul>
-        <li>Modus, Median, Mittelwert</li>
-        <li>Quartile &amp; Quantile<span class="new-tag">neu</span></li>
-        <li>75%-Quantil berechnen</li>
-        <li>Formeln auf Formelblatt 1</li>
-      </ul>
-      <div class="aufgabe">📝 AB1: Aufg. 1a + 1e</div>
+      <div class="day-label">Tag 1 · Mo 18.05</div>
+      <div class="day-name">Lageparameter I – Mittelwerte</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Median & Mittelwert berechnen + interpretieren</span><span class="aufg kv">AB1 · 1a</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Geometrisches Mittel (Wachstumsfaktor)</span><span class="aufg kv">AB1 · 4</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Modus bestimmen</span><span class="aufg extra">Skript</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Harmonisches Mittel (Geschwindigkeiten)</span><span class="aufg extra">AB1 · 5</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 2 · Mo 19.05</div>
-      <div class="day-name">Lageparameter II</div>
-      <ul>
-        <li>Geometrisches Mittel</li>
-        <li>Harmonisches Mittel<span class="new-tag">neu</span></li>
-        <li>Wann welches Mittel?</li>
-      </ul>
-      <div class="aufgabe">📝 AB1: Aufg. 4 + 5</div>
+      <div class="day-label">Tag 2 · Di 19.05</div>
+      <div class="day-name">Lageparameter II – Quantile</div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Quartile & Quantile berechnen</span><span class="aufg extra">AB1 · 1e</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">75%-Quantil (Median-Logik anwenden)</span><span class="aufg extra">AB1 · 1e</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 3 · Di 20.05</div>
+      <div class="day-label">Tag 3 · Mi 20.05</div>
       <div class="day-name">Streuungsparameter</div>
-      <ul>
-        <li>Spannweite</li>
-        <li>Mittlere lin. Abweichung</li>
-        <li>Varianz + Standardabweichung</li>
-        <li>Variationskoeffizient</li>
-      </ul>
-      <div class="aufgabe">📝 AB1: Aufg. 1b</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Varianz + Standardabweichung</span><span class="aufg kv">AB1 · 1b</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Spannweite + Mittlere lin. Abweichung</span><span class="aufg kv">AB1 · 1b</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Variationskoeffizient V = s / x̄</span><span class="aufg extra">Skript</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 4 · Mi 21.05</div>
-      <div class="day-name">Häufigkeiten + Klassen</div>
-      <ul>
-        <li>Absolute + relative Häufigkeit</li>
-        <li>Kumulierte Häufigkeiten</li>
-        <li>Klassenbildung<span class="new-tag">neu</span></li>
-        <li>Mittelwert/Median bei Klassen</li>
-      </ul>
-      <div class="aufgabe">📝 AB1: Aufg. 1c + 3</div>
+      <div class="day-label">Tag 4 · Do 21.05</div>
+      <div class="day-name">Häufigkeiten + Klassenbildung</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Abs. + rel. + kumulierte Häufigkeiten</span><span class="aufg kv">AB1 · 1c</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Klassenbildung: Mittelwert + Median</span><span class="aufg extra">AB1 · 3</span></div>
+      <div class="task-row"><span class="prio skip">NICHT</span><span class="txt dimmed">Lorenzkurve & Gini-Koeffizient</span></div>
+      <div class="task-row"><span class="prio skip">NICHT</span><span class="txt dimmed">Diagramme zeichnen / wählen</span></div>
     </div>
+
   </div>
-  <div class="skip-box"><strong>🚫 Weglassen:</strong> Lorenzkurve &amp; Gini → Prof hat es explizit ausgeschlossen · Diagramme zeichnen → kein Rechenthema</div>
 </div>
 
-<!-- PHASE 2 -->
-<div class="phase p2">
+<!-- ═══════════════ PHASE 2 ═══════════════ -->
+<div class="phase c-green">
   <div class="phase-header">
-    <h2>🔗 Phase 2 – Mehrdimensionale Statistik (Kap. 3)</h2>
+    <h2>🔗 Phase 2 – Mehrdimensionale Statistik</h2>
     <span class="dates">22.–24. Mai · 3 Tage</span>
-    <span class="badge">Aufgabenblatt 2</span>
+    <span class="kap">Kap. 3 · AB 2</span>
   </div>
   <div class="days">
+
     <div class="day">
-      <div class="day-label">Tag 5 · Do 22.05</div>
+      <div class="day-label">Tag 5 · Fr 22.05</div>
       <div class="day-name">Kontingenztabelle</div>
-      <ul>
-        <li>Randhäufigkeiten</li>
-        <li>Bedingte Häufigkeiten</li>
-        <li>Unabhängigkeit prüfen</li>
-      </ul>
-      <div class="aufgabe">📝 AB2: Aufg. 1 + 2a–c</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Randhäufigkeiten bestimmen</span><span class="aufg kv">AB2 · 1</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Unabhängigkeit der Merkmale prüfen</span><span class="aufg kv">AB2 · 1</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Bedingte Häufigkeiten berechnen</span><span class="aufg extra">AB2 · 2</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 6 · Fr 23.05</div>
-      <div class="day-name">Kovarianz + Pearson + Spearman</div>
-      <ul>
-        <li>Kovarianz berechnen</li>
-        <li>Pearson r (−1 bis +1)</li>
-        <li>Spearman-Rang<span class="new-tag">neu</span></li>
-        <li>Ränge vergeben + d² berechnen</li>
-      </ul>
-      <div class="aufgabe">📝 AB2: Aufg. 2d + 3a+b</div>
+      <div class="day-label">Tag 6 · Sa 23.05</div>
+      <div class="day-name">Kovarianz + Korrelation</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Kovarianz + Pearson-Korr. berechnen</span><span class="aufg kv">AB2 · 3</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Korrelation interpretieren (r nahe ±1)</span><span class="aufg kv">AB2 · 5</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Spearman-Rangkorrelation (Ränge + d²)</span><span class="aufg extra">AB2 · 2d</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 7 · Sa 24.05</div>
+      <div class="day-label">Tag 7 · So 24.05</div>
       <div class="day-name">Lineare Regression</div>
-      <ul>
-        <li>ŷ = a + b·x</li>
-        <li>b und a berechnen</li>
-        <li>Gerade interpretieren</li>
-        <li>Vorhersage mit Gerade</li>
-      </ul>
-      <div class="aufgabe">📝 AB2: Aufg. 3c + 4 + 5</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Regressionsgerade ŷ = a + b·x</span><span class="aufg kv">AB2 · 3</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">b und a berechnen + interpretieren</span><span class="aufg kv">AB2 · 5</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Vorhersage mit der Geraden machen</span><span class="aufg extra">AB2 · 4</span></div>
     </div>
+
   </div>
 </div>
 
-<!-- PHASE 3 -->
-<div class="phase p3">
+<!-- ═══════════════ PHASE 3 ═══════════════ -->
+<div class="phase c-purple">
   <div class="phase-header">
-    <h2>📈 Phase 3 – Zeitreihen + Indizes (Kap. 4 + 5)</h2>
+    <h2>📈 Phase 3 – Zeitreihen + Indizes</h2>
     <span class="dates">25.–27. Mai · 3 Tage</span>
-    <span class="badge">Aufgabenblatt 3</span>
+    <span class="kap">Kap. 4 + 5 · AB 3</span>
   </div>
   <div class="days">
+
     <div class="day">
-      <div class="day-label">Tag 8 · So 25.05</div>
+      <div class="day-label">Tag 8 · Mo 25.05</div>
       <div class="day-name">Gleitende Durchschnitte</div>
-      <ul>
-        <li>Einfacher GD (SMA)<span class="new-tag">neu</span></li>
-        <li>SMA(4) und SMA(7) berechnen</li>
-        <li>Zentrierter GD (5. Ordnung)</li>
-      </ul>
-      <div class="aufgabe">📝 AB3: Aufg. 1a + 2a</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Zentrierter GD (5. Ordnung)</span><span class="aufg kv">AB3 · 1a</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Einfacher GD – SMA(4) und SMA(7)</span><span class="aufg extra">AB3 · 2a</span></div>
+      <div class="task-row"><span class="prio skip">NICHT</span><span class="txt dimmed">Trendermittlung / Sinuskurven</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 9 · Mo 26.05</div>
+      <div class="day-label">Tag 9 · Di 26.05</div>
       <div class="day-name">Exponentielle Glättung</div>
-      <ul>
-        <li>Formel mit α</li>
-        <li>α=0,25 vs. α=0,7 Unterschied</li>
-        <li>Anfangswert x̂₀</li>
-        <li>Tabelle ausfüllen üben</li>
-      </ul>
-      <div class="aufgabe">📝 AB3: Aufg. 1b</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Exp. Glättung mit α = 0,25 und α = 0,7</span><span class="aufg kv">AB3 · 1b</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Unterschied hoher vs. niedriger α</span><span class="aufg kv">AB3 · 1b</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 10 · Di 27.05</div>
+      <div class="day-label">Tag 10 · Mi 27.05</div>
       <div class="day-name">Laspeyres + Paasche</div>
-      <ul>
-        <li>Preisindex Laspeyres</li>
-        <li>Preisindex Paasche</li>
-        <li>Mengenindex Laspeyres</li>
-        <li>Mengenindex Paasche</li>
-      </ul>
-      <div class="aufgabe">📝 AB3: Aufg. 3 + 4</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Preisindex Laspeyres + Paasche</span><span class="aufg kv">AB3 · 3 + 4</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Mengenindex Laspeyres + Paasche</span><span class="aufg kv">AB3 · 3 + 4</span></div>
     </div>
+
   </div>
-  <div class="skip-box"><strong>🚫 Weglassen:</strong> Trendermittlung / Sinuskurven / zyklische Komponente → Prof hat es explizit ausgeschlossen</div>
 </div>
 
-<!-- PHASE 4 -->
-<div class="phase p4">
+<!-- ═══════════════ PHASE 4 ═══════════════ -->
+<div class="phase c-orange">
   <div class="phase-header">
-    <h2>🎲 Phase 4 – Kombinatorik (Kap. 6)</h2>
+    <h2>🎲 Phase 4 – Kombinatorik</h2>
     <span class="dates">28.–29. Mai · 2 Tage</span>
-    <span class="badge">Aufgabenblatt 4</span>
+    <span class="kap">Kap. 6 · AB 4</span>
   </div>
   <div class="days">
+
     <div class="day">
-      <div class="day-label">Tag 11 · Mi 28.05</div>
+      <div class="day-label">Tag 11 · Do 28.05</div>
       <div class="day-name">Permutation + Variation</div>
-      <ul>
-        <li>Permutation: n!</li>
-        <li>Permutation m. Wiederholung</li>
-        <li>Variation ohne Zurücklegen</li>
-        <li>Variation mit Zurücklegen</li>
-      </ul>
-      <div class="aufgabe">📝 AB4: Aufg. 2, 3b+c, 5, 6b, 7a, 10</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Variation oZ + mZ (Urne / Pferderennen)</span><span class="aufg kv">AB4 · 3b+c · 7a</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Permutation (Elfmeter-Reihenfolge)</span><span class="aufg kv">AB4 · 6b</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Permutation m. Wiederholung (MISSISSIPPI)</span><span class="aufg extra">AB4 · 2</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Variation: Kfz-Kennzeichen / Passwort</span><span class="aufg extra">AB4 · 5 · 12</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 12 · Do 29.05</div>
+      <div class="day-label">Tag 12 · Fr 29.05</div>
       <div class="day-name">Kombination</div>
-      <ul>
-        <li>„n über k" = n!/(k!·(n−k)!)</li>
-        <li>Ohne Zurücklegen, Reihenfolge egal</li>
-        <li>Kombination m. Wiederholung</li>
-        <li>Gemischte Aufgaben üben</li>
-      </ul>
-      <div class="aufgabe">📝 AB4: Aufg. 1, 3a, 4, 6a, 7b, 8, 9</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Kombination oZ (Urne, Elfmeter, Pferde)</span><span class="aufg kv">AB4 · 3a · 6a · 7b</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Kombination: Vorstand, Qualitätskontrolle</span><span class="aufg extra">AB4 · 8 · 9</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Gemischte Aufgaben (Tonleiter, Akkord)</span><span class="aufg extra">AB4 · 4</span></div>
     </div>
+
   </div>
-  <div class="tip">💡 Entscheidungsbaum: Reihenfolge wichtig? → Variation/Permutation. Reihenfolge egal? → Kombination. Zurücklegen? → mit Wiederholung.</div>
 </div>
 
-<!-- PHASE 5 -->
-<div class="phase p5">
+<!-- ═══════════════ PHASE 5 ═══════════════ -->
+<div class="phase c-pink">
   <div class="phase-header">
-    <h2>🎯 Phase 5 – WS-Grundlagen + Zufallsvariablen (Kap. 7.1–7.4)</h2>
-    <span class="dates">30. Mai – 01. Juni · 3 Tage</span>
-    <span class="badge">Aufgabenblatt 5 + 6</span>
+    <h2>🎯 Phase 5 – WS-Grundlagen + Zufallsvariablen</h2>
+    <span class="dates">30. Mai – 01. Jun · 3 Tage</span>
+    <span class="kap">Kap. 7.1–7.4 · AB 5 + 6</span>
   </div>
   <div class="days">
+
     <div class="day">
-      <div class="day-label">Tag 13 · Fr 30.05</div>
+      <div class="day-label">Tag 13 · Sa 30.05</div>
       <div class="day-name">Klassische WS + Bayes</div>
-      <ul>
-        <li>P = günstig / möglich</li>
-        <li>Komplementregel: 1−P(A)</li>
-        <li>Additionssatz</li>
-        <li>Baumdiagramm zeichnen</li>
-        <li>Totale Wahrscheinlichkeit</li>
-        <li>Bayes-Theorem</li>
-      </ul>
-      <div class="aufgabe">📝 AB5: Aufg. 1, 4, 5, 6</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Klassische WS (Urne: rote + blaue Kugeln)</span><span class="aufg kv">AB5 · 1</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Klassische WS (Socken – gleichfarb. Paar)</span><span class="aufg kv">AB5 · 4</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Totale WS + Bayes (Gentest / Krebs)</span><span class="aufg kv">AB5 · 5</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Totale WS + Bayes (Autohersteller)</span><span class="aufg kv">AB5 · 6</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Nummernschildroulette (komplexe WS)</span><span class="aufg extra">AB5 · 2</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 14 · Sa 31.05</div>
+      <div class="day-label">Tag 14 · So 31.05</div>
       <div class="day-name">Dichtefunktion f(x)</div>
-      <ul>
-        <li>f(x): Fläche = Wahrscheinlichkeit</li>
-        <li>Nachweis: Integral = 1</li>
-        <li>Verteilungsfunktion F(x)</li>
-        <li>P(a≤X≤b) = F(b)−F(a)</li>
-        <li>Stetig vs. diskret</li>
-      </ul>
-      <div class="aufgabe">📝 AB6: Aufg. 2 + 3 + 5</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Dichtefunktion ax−0,5 prüfen + F(x)</span><span class="aufg kv">AB6 · 2</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Dreieck-Dichtefunktion (Anlasser)</span><span class="aufg kv">AB6 · 5</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Stückweise F(x) – Verteilungsfunktion prüfen</span><span class="aufg extra">AB6 · 3</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 15 · So 01.06</div>
+      <div class="day-label">Tag 15 · Mo 01.06</div>
       <div class="day-name">E(X) + Varianz + σ</div>
-      <ul>
-        <li>Erwartungswert E(X)</li>
-        <li>Varianz Var(X)</li>
-        <li>Standardabweichung σ</li>
-        <li>Diskret: Tabelle aufstellen</li>
-        <li>Stetig: Integral nutzen</li>
-      </ul>
-      <div class="aufgabe">📝 AB6: Aufg. 1 + 4 + 6 + 7</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Wahrsch.-Fkt. + E(X) aufstellen (Urne)</span><span class="aufg kv">AB6 · 1</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">E(X) + σ beim Würfelspiel</span><span class="aufg kv">AB6 · 6</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Versicherung: E(X) + Prämienberechnung</span><span class="aufg extra">AB6 · 4</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Glücksrad: E(X) + σ + Einsatz</span><span class="aufg extra">AB6 · 7</span></div>
     </div>
+
   </div>
 </div>
 
-<!-- PHASE 6 -->
-<div class="phase p6">
+<!-- ═══════════════ PHASE 6 ═══════════════ -->
+<div class="phase c-yellow">
   <div class="phase-header">
-    <h2>📦 Phase 6 – Alle Verteilungen (Kap. 7.5 + 7.6)</h2>
-    <span class="dates">02.–06. Juni · 5 Tage</span>
-    <span class="badge">Aufgabenblatt 7</span>
+    <h2>📦 Phase 6 – Alle Verteilungen</h2>
+    <span class="dates">02.–06. Jun · 5 Tage</span>
+    <span class="kap">Kap. 7.5–7.6 · AB 7</span>
   </div>
   <div class="days">
+
     <div class="day">
-      <div class="day-label">Tag 16 · Mo 02.06</div>
+      <div class="day-label">Tag 16 · Di 02.06</div>
       <div class="day-name">Binomialverteilung</div>
-      <ul>
-        <li>B(n;p;k) – Formel</li>
-        <li>Kumulierte Tabelle ablesen</li>
-        <li>E(X)=n·p</li>
-        <li>Var=n·p·(1−p)</li>
-      </ul>
-      <div class="aufgabe">📝 AB7: Aufg. 1a, 5a, 7, 9, 10</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Binomial: Festplatten-Lebensdauer</span><span class="aufg kv">AB7 · 1a</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Binomial + Poisson: Elektrogeräte</span><span class="aufg kv">AB7 · 5</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Binomial: Reklamationen</span><span class="aufg kv">AB7 · 10</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Binomial: Autohaus (¼ Kunden)</span><span class="aufg extra">AB7 · 7</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Binomial: Rückrufaktion (Budget)</span><span class="aufg extra">AB7 · 9</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 17 · Di 03.06</div>
-      <div class="day-name">Hypergeometrisch</div>
-      <ul>
-        <li>Ohne Zurücklegen, endlich</li>
-        <li>Formel mit N, M, n, k</li>
-        <li>E(X) und σ</li>
-        <li>Wann hypergeom. statt binom.?</li>
-      </ul>
-      <div class="aufgabe">📝 AB7: Aufg. 2, 6, 8a</div>
+      <div class="day-label">Tag 17 · Mi 03.06</div>
+      <div class="day-name">Hypergeometrische Verteilung</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Hypergeom.: Urne 10 Kugeln (6 rot, 4 weiß)</span><span class="aufg kv">AB7 · 2</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Hypergeom. + Binom.: Urne 20 Kugeln</span><span class="aufg kv">AB7 · 8</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Hypergeom.: Betonbauteile (Hersteller B)</span><span class="aufg extra">AB7 · 6</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 18 · Mi 04.06</div>
-      <div class="day-name">Poisson + Geometrisch</div>
-      <ul>
-        <li>Poisson: μ=n·p (seltenes Ereignis)</li>
-        <li>Poisson-Tabelle lesen</li>
-        <li>Geometrisch: wann erster Erfolg?</li>
-        <li>P(X=k)=(1−p)^(k−1)·p</li>
-      </ul>
-      <div class="aufgabe">📝 AB7: Aufg. 3, 4, 5b</div>
+      <div class="day-label">Tag 18 · Do 04.06</div>
+      <div class="day-name">Geometrisch + Poisson</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Geometrisch: Mensch ärger dich nicht</span><span class="aufg kv">AB7 · 3</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Geometrisch: Roulette (rouge)</span><span class="aufg kv">AB7 · 4</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Poisson-Tabelle ablesen (aus AB7 · 5b)</span><span class="aufg kv">AB7 · 5</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 19 · Do 05.06</div>
-      <div class="day-name">Normalverteilung</div>
-      <ul>
-        <li>z-Standardisierung: z=(x−μ)/σ</li>
-        <li>Tabelle Φ(z) ablesen</li>
-        <li>P(X≤a), P(X≥a), P(a≤X≤b)</li>
-        <li>Φ(−z) = 1−Φ(z)</li>
-        <li>Zentraler Grenzwertsatz<span class="new-tag">neu</span></li>
-      </ul>
-      <div class="aufgabe">📝 AB7: Aufg. 11, 12, 15, 17</div>
+      <div class="day-label">Tag 19 · Fr 05.06</div>
+      <div class="day-name">Normalverteilung + ZGS</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Normal: LED-Leuchtdauer</span><span class="aufg kv">AB7 · 11</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Normal: Webserver-Ausfallzeit</span><span class="aufg kv">AB7 · 12</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Normal: Salami 150g</span><span class="aufg kv">AB7 · 15</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Normal: Tennisschläger (Toleranzbereich)</span><span class="aufg extra">AB7 · 17</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Zentraler Grenzwertsatz (aus Mitschrift)</span><span class="aufg extra">Mitschrift</span></div>
     </div>
+
     <div class="day">
-      <div class="day-label">Tag 20 · Fr 06.06</div>
+      <div class="day-label">Tag 20 · Sa 06.06</div>
       <div class="day-name">Gleichvert. + Exponential</div>
-      <ul>
-        <li>Gleichvert.: f(x)=1/(b−a)</li>
-        <li>E(X)=(a+b)/2, σ=(b−a)/√12</li>
-        <li>Exponential: f(x)=λ·e^(−λx)</li>
-        <li>F(x)=1−e^(−λx), E(X)=1/λ</li>
-      </ul>
-      <div class="aufgabe">📝 AB7: Aufg. 13, 14, 16</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Gleichvert.: Spedition Köln–Hannover</span><span class="aufg kv">AB7 · 14</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Gleichvert.: S-Bahn Bergisch Gladbach</span><span class="aufg extra">AB7 · 13</span></div>
+      <div class="task-row"><span class="prio should">SOLLTE</span><span class="txt dimmed">Exponential: Maschine (λ, E(X)=1/λ)</span><span class="aufg extra">AB7 · 16</span></div>
     </div>
+
   </div>
-  <div class="tip">💡 Tabellen-Tipp: Binomial- und Poisson-Tabelle IMMER mit konkreten Zahlen üben. Ohne Übung ist die Tabelle in der Klausur verwirrend!</div>
 </div>
 
-<!-- PHASE 7 -->
-<div class="phase p7">
+<!-- ═══════════════ PHASE 7 ═══════════════ -->
+<div class="phase c-red">
   <div class="phase-header">
-    <h2>🔥 Phase 7 – Finale Vorbereitung + Klausur</h2>
-    <span class="dates">07.–08. Juni · 2 Tage</span>
-    <span class="badge">🎯 Klausurtag</span>
+    <h2>🔥 Phase 7 – Finale + Klausur</h2>
+    <span class="dates">07.–08. Jun · 2 Tage</span>
+    <span class="kap">🎯 Klausurtag</span>
   </div>
   <div class="days">
+
     <div class="day">
       <div class="day-label">Tag 21 · So 07.06</div>
       <div class="day-name">Wiederholung + Formelblätter</div>
-      <ul>
-        <li>Alle 3 Formelblätter fertigstellen</li>
-        <li>Schwächste Themen nochmal</li>
-        <li>Tabellen (Binom/Poisson/Normal) lesen üben</li>
-        <li>Früh schlafen!</li>
-      </ul>
-      <div class="aufgabe">🗂️ Formelsammlung prüfen</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Alle 3 Formelblätter fertigstellen</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Tabellen lesen üben (Binom/Poisson/Normal)</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Schwächste Themen nochmal wiederholen</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Früh ins Bett – ausgeschlafen zur Klausur!</span></div>
     </div>
+
     <div class="day">
       <div class="day-label">Tag 22 · Mo 08.06</div>
-      <div class="day-name" style="color:#f87171">🎯 KLAUSUR</div>
-      <ul>
-        <li>Formelsammlung (3 doppelseitig)</li>
-        <li>Tabellen werden gestellt</li>
-        <li>Taschenrechner mitnehmen</li>
-        <li>Klausur: Kap. 1 → 7 der Reihe nach</li>
-      </ul>
+      <div class="day-name" style="color:#f87171;font-size:0.9rem">🎯 KLAUSUR · 08.06.2026</div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Formelsammlung (3 doppelseitige Blätter)</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Tabellen werden vom Prof gestellt</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Taschenrechner mitnehmen</span></div>
+      <div class="task-row"><span class="prio must">MUSS</span><span class="txt">Klausur: Kap. 1 → 7 der Reihe nach</span></div>
     </div>
+
   </div>
 </div>
 
-<!-- Info bar -->
 <div class="info-bar">
-  <strong>📌 Prof-Hinweise (11.05.2026) zur Klausur:</strong><br>
-  Formelsammlung: 3 doppelseitige Blätter · Formeln + Legende rein, Definitionen nur wenn nötig ·
+  <strong>📌 Prof-Hinweise (11.05.2026):</strong>
+  Formelsammlung 3×2 Seiten · Formeln + Legende, Definitionen nur wenn nötig ·
   Tabellen (Binomial, Poisson, Normal) werden gestellt ·
-  Klausur folgt Skript Kap. 1–7 ·
-  Poisson = „seltenes Ereignis" (n groß, p sehr klein) ·
-  <span style="color:#f87171">Keine Lorenz-/Sinuskurven · Keine Trendermittlung · Keine Definitionen auswendig</span>
+  Klausur Kap. 1–7 in Reihenfolge ·
+  Poisson = „seltenes Ereignis" ·
+  <span style="color:#f87171">🚫 Lorenzkurve & Gini · Trendermittlung & Sinuskurven · Definitionen auswendig → kommen nicht!</span>
 </div>
 
 <footer>WSTA Klausurvorbereitung · FHDW Bergisch Gladbach · Prof. Dax · Klausur 08.06.2026</footer>
-
 </body>
 </html>
